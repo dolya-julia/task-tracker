@@ -1,0 +1,50 @@
+{% extends "tracker/base.html" %}
+{% load static %}
+
+{% block title %}Home Page{% endblock title %}
+
+{% block content %}
+<div class="container-fluid h-100">  {# container-fluid for full-width, h-100 for full height #}
+    <div class="row h-100 align-items-center">  {# row takes full height, vertically align #}
+        <div class="col-md-6 text-col">  {# col-md-6 for text, add custom class #}
+            <h1>Добро пожаловать в Task Tracker! </h1>
+            <p class="lead">Управляйте своими задачами легко и эффективно.  Создавайте, планируйте и отслеживайте задачи, чтобы ничего не забыть.</p>
+            <p>Начните прямо сейчас!</p>
+        </div>
+        <div class="col-md-6 image-col">  {# col-md-6 for image, add custom class #}
+            <img src="{% static 'main_picture.png' %}" alt="Task Tracker Image" class="img-fluid rounded full-screen-image">
+        </div>
+    </div>
+</div>
+
+<style>
+    .text-col h1 {
+        font-size: 4em; /* Adjust as needed */
+    }
+
+    .text-col p {
+        font-size: 1.5em; /* Adjust as needed */
+    }
+
+    .full-screen-image {
+      width: 100%; /* Make the image take up the full column width */
+      height: auto; /* Maintain aspect ratio */
+      max-height: 80vh; /* Limit the maximum height to prevent overflow */
+      object-fit: contain; /* Crucial for fitting the image within the container */
+    }
+
+    .container-fluid.h-100 {
+        min-height: 60vh; /* Ensure the container has at least the viewport height */
+    }
+
+    .row.h-100 {
+        min-height: inherit; /* Inherit the height from the container */
+    }
+
+    body {
+        overflow: hidden; /* Hide scrollbars on the body */
+    }
+</style>
+
+{% endblock content %}
+
