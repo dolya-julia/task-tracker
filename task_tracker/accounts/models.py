@@ -38,8 +38,16 @@ class Task(models.Model):
     assigned_to = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=True)
 
     def clean(self):
-        if self.start_date and self.end_date and self.start_date > self.end_date:
-            raise ValidationError('Дата начала не может быть позже даты окончания!')
+        today = timezone.localdate() 
 
+        if self.start_date and self.end_date:
+            if self.start_date > self.end_date:
+                raise ValidationError('Дата начала не может быть позже даты окончания!')
+
+            if self.end_date < today:
+                raise ValidationError('Дата окончания не может быть в прошлом!')
+            
+            
     def __str__(self):
         return self.title
+
