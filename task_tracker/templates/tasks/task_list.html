@@ -1,8 +1,19 @@
 {% extends "tracker/base.html" %}
-{% block title %}Tasks Page{% endblock title %}
+
+{% block title %}Список задач{% endblock %}
+
 {% block content %}
- <div>
-        <h5>Здесь ваши задачи!</h5>
-        <hr>
- </div>
-{% endblock content %}
+<h2>Список задач</h2>
+<a href="{% url 'task_create' %}">Добавить задачу</a>
+<ul>
+    {% for task in tasks %}
+    <li>
+        <strong>{{ task.title }}</strong> ({{ task.status }})  
+        <a href="{% url 'task_update' task.pk %}">✏️ Изменить</a> |  
+        <a href="{% url 'task_delete' task.pk %}">🗑️ Удалить</a>
+    </li>
+    {% empty %}
+    <p>Задач пока нет.</p>
+    {% endfor %}
+</ul>
+{% endblock %}
