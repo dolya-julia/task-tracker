@@ -1,0 +1,15 @@
+{% extends "tracker/base.html" %}
+
+{% block title %}{{ task.id|default:"Создание задачи" }}{% endblock %}
+
+{% block content %}
+<h2>{% if task %}Редактировать{% else %}Создать{% endif %} задачу</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Сохранить</button>
+</form>
+
+<a href="{% url 'task_list' %}">Назад к списку задач</a>
+{% endblock %}
