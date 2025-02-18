@@ -123,3 +123,35 @@ def task_delete(request, pk):
         return redirect('task_list')
     return render(request, 'tasks/task_confirm_delete.html', {'task': task})
 
+
+
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_protect
+import json
+
+@csrf_protect
+def update_task_status(request, task_id):
+    print(f"Вызвано представление update_task_status с task_id: {task_id}")  # Отладочный вывод
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            new_status = data['status']
+            print(f"Получен новый статус: {new_status}") # Отладочный вывод
+
+            task = get_object_or_404(Task, pk=task_id)
+            print(f"Найдена задача: {task}") # Отладочный вывод
+            task.status = new_status
+            task.save()
+            print(f"Статус задачи обновлен на: {task.status}") # Отладочный вывод
+
+            return JsonResponse({'status': 'success'})
+        except Exception as e:
+            print(f"Произошла ошибка: {e}")  # Отладочный вывод
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+    else:
+        print("Некорректный метод запроса") # Отладочный вывод
+        return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
+
+
+
